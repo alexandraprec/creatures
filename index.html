@@ -4,6 +4,9 @@
         <title>Creatures - JS Data Attributes Example</title>
 
         <style>
+            body{
+                background-color: #ddf2d1;
+            }
             
             div.creature{
                 padding:5px;
@@ -24,7 +27,7 @@
     </head>   
     <body>
     <h1>Creatures</h1>
-    <h3>A JavaScript data attributes example by NAME HERE</h3>
+    <h3>A JavaScript data attributes example by Alexandra Preciado</h3>
     <p>This page demonstrates how to use JavaScript data attributes to differentiate data.</p>
     <p>When you click <b>Show Creature Home</b>, the background color will change color based on their natural environment:
     </p> 
@@ -43,38 +46,38 @@
             <li>insect: dashed orange</li>
         </ul>
     </div>
-    <div class="creature">    
+    <div class="creature" data-type="animal" data-home="land">    
         <img src="images/monkey.png" alt="monkey">
         <h3>Monkey</h3>
         <p>Monkeys are cute, but don't try to cuddle them.</p>
     </div>
         
-   <div class="creature">    
+   <div class="creature" data-type="animal" data-home="air">    
         <img src="images/hummingbird.png" alt="hummingbird">
         <h3>Hummingbird</h3>
         <p>Hummingbirds are cute, but don't get in the way of their food.</p>
     </div>
         
-    <div class="creature">    
+    <div class="creature" data-type="insect" data-home="land">    
         <img src="images/spider.png" alt="spider">
         <h3>Spiders</h3>
     <p>Spiders are not cute, in fact they creep me out.</p>
     </div>
         
-   <div class="creature">    
+   <div class="creature" data-type="animal" data-home="air">    
         <img src="images/crow.png" alt="crow">
         <h3>Crow</h3>
         <p>Crows are not cute, and don't feed them your french fries.</p>
     </div> 
         
         
-    <div class="creature">    
+    <div class="creature" data-type="animal" data-home="water">    
         <img src="images/fish.png" alt="fish">
         <h3>Fish</h3>
         <p>Fish are not cute, but they taste good!</p>
     </div>
         
-    <div class="creature">    
+    <div class="creature" data-type="insect" data-home="air">    
         <img src="images/stinkbug.png" alt="stinkbug">
         <h3>Stink Bug</h3>
         <p>Stinkbugs are not cool!  Don't touch them!</p>
@@ -87,45 +90,61 @@
     </p>
      
     <script>
+        let homeState = false;
+        let typeState = false;
 
-        
-        function showHome()
-        {
-            /*
-                loop through all creatures
-                
-                if creature lives on land, background color green
-                if creature lives in water, blue
-                if creature lives in air, yellow
-                
-                */
-               alert("showHome()");
-            
-        }//end showHome()
-        
-        function showType()
-        {
-            /*
-                loop through all creatures
-                
-                if creature is an animal, border color solid red
-                if creature is an insect, border color is dashed orange
-            */
-            alert("showType()");
-        }//end showType()
+        function showHome() {
+            const landColor = 'green';
+            const waterColor = 'blue';
+            const airColor = 'yellow';
+            const creatures = document.querySelectorAll('.creature');
 
-        function clearAll()
-        {
-            /*
-                loop through all creatures
-                
-                clear border back to 1px solid black
-                clear background color to white
-                
-            */
-            alert("clearAll()");
-        }//end clearAll()
+            creatures.forEach(creature => {
+                const home = creature.getAttribute('data-home');
+                if (homeState) {
+                    creature.style.backgroundColor = '';
+                } else {
+                    if (home === 'land') creature.style.backgroundColor = landColor;
+                    else if (home === 'water') creature.style.backgroundColor = waterColor;
+                    else if (home === 'air') creature.style.backgroundColor = airColor;
+                }
+            });
+            homeState = !homeState;
+        }
 
+        function showType() {
+            const animalColor = 'solid';
+                const insectColor = 'dashed';
+                const creatures = document.querySelectorAll('.creature');
+
+                creatures.forEach(creature => {
+                    const type = creature.getAttribute('data-type');
+                    if (typeState) {
+                        creature.style.borderStyle = 'solid';
+                        creature.style.borderColor = 'black';
+                    } else {
+                        if (type === 'animal') {
+                            creature.style.borderStyle = animalColor;
+                            creature.style.borderColor = 'red';
+                        } else if (type === 'insect') {
+                            creature.style.borderStyle = insectColor;
+                            creature.style.borderColor = 'orange';
+                        }
+                    }
+                });
+                typeState = !typeState;
+            }
+
+        function clearAll() {
+            const creatures = document.querySelectorAll('.creature');
+            creatures.forEach(creature => {
+                creature.style.backgroundColor = '';
+                creature.style.borderStyle = 'solid';
+                creature.style.borderColor = 'black';
+            });
+            homeState = false;
+            typeState = false;
+        }
     </script>    
     </body>
 </html>
